@@ -1,42 +1,41 @@
-//Accessing HTML element through JS
-// document.getElementById("root") = "Hello World!!"
+import React from "react";
+import ReactDOM from "react-dom/client";
 
-// const heading = document.createElement("h1");
-// heading.innerHTML = "Hello World!! from JS";
+//React element through React
 
-// const root = document.getElementById('root');
-// root.appendChild(heading);
+const heading = React.createElement("h1", {id: "heading"}, "React Project");
 
-
-
-//Accessing HTML element through React JS
-
-//React is a library  -- creating an h1 element inside React (core React thing - 1st library)
-const heading = React.createElement(   //this is a react element -> JS object
-    "h1",                         //what type of tag we are creating
-    { id: "heading" },            // attribute of tag
-    "Hello World from React!!"    // children of this tag
-);
-
-console.log(heading);
-
-// React needs to have a root where it can do all DOM stuffs
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-//Render inside Root  -> take the object, convert into h1 tag and put it inside root (DOM)
-root.render(heading);
+//React element through JSX syntax
+const jsxHeading = <h1 id="heading "> React Project through JSX</h1>;
 
-
-//React element (object)  => HTML tag that browser understands
-const parent = React.createElement(
-    "div", 
-    { id: "parent" }, 
-    React.createElement(
-        "div", 
-        {id: "child"}, 
-        [React.createElement("h1", {}, "h1 tag"),
-        React.createElement("h2", {}, "h2 tag")
-    ])
+//If JSX is multi lined, we wrap it inside ()
+const jsxHeading2 = (
+    <div className="container2">
+        <h2 className="head2">
+            Writing JSX in multiple lines and wrapping it inside parentheses.
+        </h2>
+    </div>
 );
-root.render(parent);
 
+const Title = function () {
+    return (
+        <h1 className="head">
+            Learning React!!
+        </h1>
+    );
+};
+
+const num = 1000;
+
+// React Functional Component
+const HeadingComponent = () => (
+    <div id="conatiner">
+        <Title />
+        {num}
+        <h2 className="heading"> React Functional Component! </h2>
+    </div>
+);
+
+root.render(<HeadingComponent />);
