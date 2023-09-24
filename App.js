@@ -1,41 +1,33 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-//React element through React
-
-const heading = React.createElement("h1", {id: "heading"}, "React Project");
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-
-//React element through JSX syntax
-const jsxHeading = <h1 id="heading "> React Project through JSX</h1>;
-
-//If JSX is multi lined, we wrap it inside ()
-const jsxHeading2 = (
-    <div className="container2">
-        <h2 className="head2">
-            Writing JSX in multiple lines and wrapping it inside parentheses.
-        </h2>
-    </div>
-);
-
-const Title = function () {
+//Functional Component
+const HeadingComponent = () => {
     return (
-        <h1 className="head">
-            Learning React!!
-        </h1>
+        <div>
+            <h1>h1 heading using Functional Component!</h1>
+            <h2>h2 heading using Functional Component!</h2>
+            <h3>h3 heading using Functional Component!</h3>
+        </div>
     );
 };
 
-const num = 1000;
+//JSX heading
+const heading = (
+    <div>
+        <h1 className="level1" id="head1">
+            This is h1 level heading!
+        </h1>
+        <h2 className="level2" id="head2">
+            This is h2 level heading!
+        </h2>
+        <h3 className="level3" id="head3">
+            This is h3 level heading!
+        </h3>
 
-// React Functional Component
-const HeadingComponent = () => (
-    <div id="conatiner">
-        <Title />
-        {num}
-        <h2 className="heading"> React Functional Component! </h2>
+        <HeadingComponent />
     </div>
 );
 
-root.render(<HeadingComponent />);
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(heading);
