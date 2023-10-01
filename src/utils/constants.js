@@ -16,3 +16,6 @@ export const MENU_URL_B =
 
 export const DISH_IMG = 
     "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_208,h_208,c_fit/";
+
+export const CATEGORY = 
+    "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory";

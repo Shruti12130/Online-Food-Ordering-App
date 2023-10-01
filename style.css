@@ -44,6 +44,11 @@
     align-items: center;
 }
 
+.user-card {
+    padding: 10px;
+    border: 1px solid;
+}
+
 .search-bar {
     margin-right: 50px;
     width: 300px;
@@ -72,6 +77,15 @@
     padding: 5px;
 }
 
+.restaurant-details {
+    margin-bottom: 150px;
+}
+
+.restaurant-details-container {
+    margin-bottom: 40px;
+    color: rgb(245, 94, 94)
+}
+
 .restaurant-card {
     width: 300px;
     margin: 20px 20px;
@@ -82,6 +96,7 @@
 a, a:hover, a:focus, a:active {
     text-decoration: none !important;
     color: inherit;
+    color: black;
 }
 
 .loading-restaurant-cards {
@@ -129,28 +144,81 @@ ul {
 }
 
 .menu-items {
-    height: 80px;
+    /* height: 150px; */
+    margin: 15px; 
     width: 700px;
-    margin: 5px;
     display: flex;
     flex: wrap;
-    background-color: rgb(239, 243, 244);
+    border-bottom: 2px solid rgb(239, 224, 224);
+    /* color: white; */
+    /* background-color: rgb(236, 182, 182); */
+    /* background-color: rgb(239, 243, 244); */
 }
 
 .menu-items img {
     align-items: end;
-    height: 60px;
-    margin: 10px;
+    height: 50 px;
+    width: 120px;
+    margin-top: 20px;
     border-radius: 5px;
-    margin-left: 450px;
+    float: right;
+    margin-left: 20px;
+
+    height: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
 }
 
 .menu-text {
-    margin: 0 auto;
-    margin-top: 25px;
+    margin-top: 15px;
+    text-align: left;
+    width: 75%;
+    /* align-items: center;
+    justify-content: center; */
+}
+
+.accordion {
+    margin-bottom: 10px;
+    box-shadow: 5px 5px 5px rgb(243, 200, 200);
+}
+
+.img-container {
+    height: 80px;
+    right:0px;
+    float: right;
+    justify-content: end;
+}
+
+.add {
+    position: absolute;
+}
+
+.add-btn {
+    color: white;
+    border: 1px solid rgb(245, 173, 173);
+    background-color: rgb(245, 173, 173);
+    margin-left: 20px;
+}
+
+label {
+    position: absolute;
+    color: white;
+    padding: 2px 8px;
+    margin: 0 22px;
+    border-radius: 5%;
+    background-color: rgb(251, 104, 104);
+}
+
+small {
+    font-size: xx-small;
+}
+
+.cart {
     text-align: center;
-    align-items: center;
-    justify-content: center;
+    margin: 50px;
+    padding: 20px;
 }
  
 .footer {
