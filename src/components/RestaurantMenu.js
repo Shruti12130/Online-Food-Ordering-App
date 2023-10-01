@@ -1,25 +1,24 @@
-import { useState, useEffect } from "react";
-import { MENU_URL_A, MENU_URL_B, DISH_IMG } from "../utils/constants";
 import ShimmerUI from "./ShimmerUI";
 import { useParams } from "react-router-dom";
+import { useContext, useState } from "react";
+import useRestaurantMenu from "../utils/useRestaurantMenu";
+import { CATEGORY } from "../utils/constants";
+import RestaurantCategory from "./RestaurantCategory";
+import UserContext from "../utils/UserContext";
 
 const RestaurantMenu = () => {
 
-	const [restaurantInfo, setRestaurantInfo] = useState(null);
-
 	const { restaurantId }  = useParams();
 
-	useEffect(() => {
-		fetchMenu();
-	}, []);
+	const restaurantInfo = useRestaurantMenu(restaurantId);
 
-	const fetchMenu = async () => {
-		const data = await fetch(MENU_URL_A + restaurantId + MENU_URL_B);
-		const json = await data.json();
+	const [showIndex, setShowIndex] = useState(null);
 
-		console.log(json);
-		setRestaurantInfo(json);
-	};
+  const { loggedInUser } = useContext(UserContext);
+
+  const changeShowIndex = (index) => {
+    showIndex == index ? setShowIndex(null) : setShowIndex(index);
+  }
 
 	if(restaurantInfo === null) {
 		return (<ShimmerUI />);
@@ -31,6 +30,14 @@ const RestaurantMenu = () => {
 	const tempValue = 
 	  restaurantInfo?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card;
 
+	const categories = 
+	restaurantInfo?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+		(c) => 
+		c.card?.card?.["@type"] == CATEGORY
+	);
+
+	//console.log(categories);
+
 	// const { itemCards } = tempValue?.card || tempValue?.card.categories[0];
 	const item = (tempValue?.card?.itemCards != undefined) ? tempValue?.card?.itemCards : tempValue?.card?.categories[0].itemCards;
 	// console.log(item)
@@ -41,23 +48,29 @@ const RestaurantMenu = () => {
 				<h1>{ name }</h1>
 				<p> {cuisines.join(", ")} -  { costForTwoMessage } </p>
 				<h6> Rating: {avgRating} </h6> <br />
-				<h3>Menu</h3>
+				<h3>Menu</h3> 
 			</div>
+
+      <h4>
+        <center>
+          What would you like to have, {loggedInUser} ?
+        </center>
+      </h4>
+      <br />
 			
 			<div className="menu-details">
-				<ul>
-					{ item.map( (currItem) => (
-						<li >
-							<div className="menu-items">
-								<div className="menu-text">
-									<b> { currItem.card.info.name } </b> - Rs { currItem.card.info.price/100 || currItem.card.info.defaultPrice/100 }
-								</div>
-							</div>
-							
-						</li>
-						)) 
-					}
-				</ul>
+				{
+					categories.map( (category, index) => (
+
+						//Controlled component
+						<RestaurantCategory 
+							key={category?.card?.title} 
+							data = {category?.card?.card}
+							showItems = {index == showIndex ? true : false}
+              setShowIndex = {() => changeShowIndex(index)}
+						/>
+					))
+				}
 			</div>
     </div>
   );

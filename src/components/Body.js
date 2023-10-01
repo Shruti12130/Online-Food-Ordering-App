@@ -1,5 +1,6 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { hasOffer } from "./RestaurantCard";
 import ShimmerUI from "./ShimmerUI";
+import useOnlineStatus from "../utils/useOnlineStatus";
 import { API_URL } from "../utils/constants";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -12,6 +13,8 @@ const Body = () => {
     const [filteredRestaurants, setFilteredRestaurants] = useState([]);
 
     const [searchText, setSearchText] = useState("");
+
+    const HasOfferRestaurant = hasOffer(RestaurantCard);
 
     useEffect(() => {
       fetchData();
@@ -27,7 +30,15 @@ const Body = () => {
 
       setListOfRestaurants(dataFromBackend);
       setFilteredRestaurants(dataFromBackend);
+      // console.log(json);
     };
+
+    const onlineStatus = useOnlineStatus();
+    if(onlineStatus == false) {
+      return (<h1>
+        Looks like you're offline!! Please check your internet connection.
+      </h1>);
+    } 
 
     return listOfRestaurants.length === 0 ? <ShimmerUI /> : (
       <div className="body-container">
@@ -67,28 +78,37 @@ const Body = () => {
             </button>
           </div>
 
-            <button 
-              className="filter-btn" 
+          <button 
+            className="filter-btn" 
 
-              onClick={() => {
-                const filteredList = listOfRestaurants.filter(
-                  (restaurant) => restaurant.info.avgRating > 4.0
-                );
+            onClick={() => {
+              const filteredList = listOfRestaurants.filter(
+                (restaurant) => restaurant.info.avgRating > 4.0
+              );
 
-                setFilteredRestaurants(filteredList);
-              }}>
+              setFilteredRestaurants(filteredList);
+            }}>
 
-                Top Rated Restaurants
-             </button>
+              Top Rated Restaurants
+          </button>
 
         </div>
         <div className="restaurant-container">
           {
             filteredRestaurants.map(restaurant => (
-              <Link key={restaurant.info.id} to= {"/restaurant/" + restaurant.info.id}>
-                <RestaurantCard restaurantData = {restaurant} />
+              <Link 
+                key={restaurant.info.id} 
+                to= {"/restaurant/" + restaurant.info.id}
+              >
+
+                {
+                  restaurant?.info?.aggregatedDiscountInfoV3 ? (
+                    < HasOfferRestaurant restaurantData = {restaurant} />
+                  ) : (
+                    <RestaurantCard restaurantData = {restaurant} />
+                  )}
               </Link>
-              ))
+            ))
           }; 
         </div>
       </div>
